@@ -13,12 +13,9 @@ call "%VS140COMNTOOLS%\..\..\VC\bin\amd64\vcvars64.bat"
 
 SET "TORCH_LUA_VERSION=LUAJIT21"
 
-set "PATH=%PATH%;C:\Program Files\CMake\bin;C:\Program Files\Git\"
-rem check if git and cmake is there
-
 set BASE=%~dp0
 set "THIS_DIR=%BASE%"
-set "PREFIX=%BASE%\install"
+set "PREFIX=%BASE%install"
 
 set "CMAKE_LIBRARY_PATH=%BASE%/include:%BASE%/lib:%CMAKE_LIBRARY_PATH%"
 set "CMAKE_PREFIX_PATH=%PREFIX%"
@@ -28,8 +25,8 @@ git submodule update --init --recursive
 echo BASE: %BASE%
 
 echo luajit-rocks
-mkdir "%BASE%\build"
-cd "%BASE%\build"
+mkdir "%BASE%build"
+cd "%BASE%build"
 cmake ..\exe\luajit-rocks -DWITH_%TORCH_LUA_VERSION%=ON -DCMAKE_INSTALL_PREFIX=%PREFIX% -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
 if errorlevel 1 goto :error
 nmake
@@ -97,4 +94,3 @@ goto :eof
 
 :error
 echo something went wrong ...
-exit 1
